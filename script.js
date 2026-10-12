@@ -249,10 +249,10 @@ options: {
 
         layout:{
             padding:{
-                top: 30,
-                bottom: 60,
-                left:30,
-                right:30,
+                top: 20,
+                bottom: 40,
+                left:50,
+                right:50,
             }
         },
         scales:{
@@ -275,7 +275,7 @@ options: {
             
             padding:{
 top: 10,
-bottom: 200,
+bottom: 20,
 
             }},
             legend:{
@@ -293,49 +293,72 @@ bottom: 200,
 
 //boxes interaction
 
-let boxImage = document.getElementById("boxImage");
-let boxContainer = document.getElementById("boxContainer");
-let graphContainer = document.getElementById("graphContainer");
+    //boxes interaction
 
-let boxOpen = false;
-let animating = false;
+    let boxImage = document.getElementById("boxImage");
+    let boxContainer = document.getElementById("boxContainer");
+    let graphContainer = document.getElementById("graphContainer");
 
-boxContainer.addEventListener("click", function(){
-    //no clicks if playing
-    if(animating){
-        return;
-    }
-    animating = true;
-    if(boxOpen == false){
-        //open
-        boxImage.src = "./boxes/box2.png";
+    let boxOpen = false;
+    let animating = false;
 
-        setTimeout(function(){
-            boxImage.src="./boxes/box3.png";
-        },500);
+    boxContainer.addEventListener("click", function() {
 
-        setTimeout(function(){
-            graphContainer.style.display = "block";
-            chart.resize();
-            chart.draw();
-            boxOpen = true;
-            animating = false;
+        //no click while playing
+        if (animating) {
+            return;
+        }
 
-        },1000);
-    }else{
-        //close
-        graphContainer.style.display = "none";
-        boxImage.src ="./boxes/box3.png";
+        animating = true;
 
-        setTimeout(function(){
-            boxImage.src="./boxes/box2.png";
-        },500);
+        if (boxOpen == false) {
 
-        setTimeout(function(){
-            boxImage.src="./boxes/box1.png";
-            boxOpen = false;
-            animating = false;
-        },1000)
-    }
-});
-});
+            //open
+
+            boxImage.src = "./boxes/box2.png";
+
+            setTimeout(function() {
+                boxImage.src = "./boxes/box3.png";
+            }, 500);
+
+            // Shrink box after opening
+            setTimeout(function() {
+                boxContainer.classList.add("small");
+            }, 1000);
+
+            // Show graph after box shrinks
+            setTimeout(function() {
+                graphContainer.style.display = "block";
+
+                chart.resize();
+                chart.draw();
+
+                boxOpen = true;
+                animating = false;
+            }, 2000);
+
+        } else {
+
+            // close
+
+            // Hide graph immediately
+            graphContainer.style.display = "none";
+
+            // Enlarge 
+            boxContainer.classList.remove("small");
+
+            // closing 
+            setTimeout(function() {
+                boxImage.src = "./boxes/box2.png";
+            }, 1000);
+
+            setTimeout(function() {
+                boxImage.src = "./boxes/box1.png";
+
+                boxOpen = false;
+                animating = false;
+            }, 1500);
+        }
+    });
+
+}); 

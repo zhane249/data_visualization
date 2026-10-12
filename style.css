@@ -56,29 +56,6 @@ h1{
     flex-shrink: 0;
 }
 
-/* 
-.box-container{
-    position: relative;
-    width:800px;
-    margin: 0 auto;
-    cursor: pointer;
-}
-#boxImage{
-    display: block;
-    width: 100%;
-}
-
-#graphContainer{
-    position:absolute;
-    top:50%;
-    left:50%;
-    transform: translate(-50%, -50%);
-    width: 70%;
-    height: 70%;
-
-    display: none;
-pointer-events: none;
-} */
 .display-container{
     display: flex;
     flex-direction: column;
