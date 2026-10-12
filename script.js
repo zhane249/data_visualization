@@ -121,7 +121,7 @@ ctx.translate(
 ctx.rotate(angle);
 
     ctx.fillStyle = "#FF9900";
-    ctx.font = "20px Times New Roman";
+    ctx.font = "bold 20px Times New Roman";
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
 ctx.fillText(
@@ -162,7 +162,7 @@ ctx.restore();
 
             }
             //hour labels
-            ctx.fillStyle = "#7A4C11";
+            ctx.fillStyle = "#3b2609";
             ctx.font="25px Times New Roman";
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";
