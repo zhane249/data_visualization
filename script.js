@@ -290,3 +290,8 @@ bottom: 200,
     plugins: [clockBars]
 });
 });
+
+//boxes interaction
+
+let boxImage = document.getElementById("boxImage");
+
