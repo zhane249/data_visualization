@@ -308,10 +308,10 @@ boxContainer.addEventListener("click", function(){
     animating = true;
     if(boxOpen == false){
         //open
-        boxImage.src = "../data_visualization/boxes/box2.png";
+        boxImage.src = "./boxes/box2.png";
 
         setTimeout(function(){
-            boxImage.src="../data_visualization/boxes/box3.png";
+            boxImage.src="./boxes/box3.png";
         },500);
 
         setTimeout(function(){
@@ -325,14 +325,14 @@ boxContainer.addEventListener("click", function(){
     }else{
         //close
         graphContainer.style.display = "none";
-        boxImage.src ="../data_visualization/boxes/box3.png";
+        boxImage.src ="./boxes/box3.png";
 
         setTimeout(function(){
-            boxImage.src="../data_visualization/boxes/box2.png";
+            boxImage.src="./boxes/box2.png";
         },500);
 
         setTimeout(function(){
-            boxImage.src="../data_visualization/boxes/box1.png";
+            boxImage.src="./boxes/box1.png";
             boxOpen = false;
             animating = false;
         },1000)

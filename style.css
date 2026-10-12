@@ -55,6 +55,8 @@ h1{
     background-color:#2458F0;
     flex-shrink: 0;
 }
+
+/* 
 .box-container{
     position: relative;
     width:800px;
@@ -76,4 +78,5 @@ h1{
 
     display: none;
 pointer-events: none;
-}
+} */
+
