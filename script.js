@@ -78,7 +78,7 @@ window.addEventListener("load", async()=>{
             for (let hour = 0; hour <24; hour +=3){
                 let angle =(hour/24) * Math.PI *2 - Math.PI/2;
                 let radius = maxRadius + 20;
-                let x - centerX + Math.cos(angle) * radius;
+                let x = centerX + Math.cos(angle) * radius;
                 let y = centerY + Math.sin(angle) * radius;
 
                 ctx.fillText(hour + ":00", x, y);
@@ -95,21 +95,21 @@ let chart = new Chart(canvas, {
         datasets: [{
             label: "Average Reviews per Hour", 
             data: averages,
-            backgroundColor: "tarnsparent";
+            backgroundColor: "transparent",
             borderColor: "transparent"
         }]
     },
 
-    options{
-        responsive: true;
-        maintainAspectRation: false;
+    options:{
+        responsive: true,
+        maintainAspectRation: false,
         scales:{
             x:{
                 display:false
-            }
+            },
             y:{
                 display: false
-            }
+            },
             y: {
                 display: false
             }
@@ -121,7 +121,7 @@ let chart = new Chart(canvas, {
                 color: "#ffffff"
             },
             legend:{
-                display:false;
+                display:false
 
             },
             tooltip:{
@@ -129,7 +129,7 @@ let chart = new Chart(canvas, {
             }
         }
     },
-    plugins: [radialBars]
+    plugins: [clockBars]
 })
 
 
