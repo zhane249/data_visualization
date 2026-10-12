@@ -106,7 +106,7 @@ ctx.lineTo(centerX, centerY);
 
 ctx.closePath();
 
-ctx.fillStyle = "#39ff14";
+ctx.fillStyle = "#2458F0";
 ctx.fill();
 
 //number of reviews once hover
@@ -120,7 +120,7 @@ ctx.translate(
 
 ctx.rotate(angle);
 
-    ctx.fillStyle = "#0f0f91";
+    ctx.fillStyle = "#FF9900";
     ctx.font = "20px Times New Roman";
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
@@ -130,8 +130,8 @@ ctx.restore();
 }
 
 //ticks
-            ctx.strokeStyle = "#ffffff";
-            ctx.lineWidth = 2;
+            ctx.strokeStyle = "#000000";
+            ctx.lineWidth = 5;
 
             for (let hour = 0; hour < 24; hour++) {
 
@@ -143,7 +143,7 @@ ctx.restore();
                 let angle = (hour / 24) * Math.PI * 2 - Math.PI / 2;
 
                 let innerTick = maxRadius + 15;
-                let outerTick = maxRadius + 20;
+                let outerTick = maxRadius + 30;
 
                 ctx.beginPath();
 
@@ -162,7 +162,7 @@ ctx.restore();
 
             }
             //hour labels
-            ctx.fillStyle = "#ffffff";
+            ctx.fillStyle = "#7A4C11";
             ctx.font="25px Times New Roman";
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";
