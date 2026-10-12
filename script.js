@@ -289,9 +289,53 @@ bottom: 200,
     },
     plugins: [clockBars]
 });
-});
+
 
 //boxes interaction
 
 let boxImage = document.getElementById("boxImage");
+let boxContainer = document.getElementById("boxContainer");
+let graphContainer = document.getElementById("graphContainer");
 
+let boxOpen = false;
+let animating = false;
+
+boxContainer.addEventListener("click", function(){
+    //no clicks if playing
+    if(animating){
+        return;
+    }
+    animating = true;
+    if(boxOpen == false){
+        //open
+        boxImage.src = "../data_visualization/boxes/box2.png";
+
+        setTimeout(function(){
+            boxImage.src="../data_visualization/boxes/box3.png";
+        },500);
+
+        setTimeout(function(){
+            graphContainer.style.display = "block";
+            chart.resize();
+            chart.draw();
+            boxOpen = true;
+            animating = false;
+
+        },1000);
+    }else{
+        //close
+        graphContainer.style.display = "none";
+        boxImage.src ="../data_visualization/boxes/box3.png";
+
+        setTimeout(function(){
+            boxImage.src="../data_visualization/boxes/box2.png";
+        },500);
+
+        setTimeout(function(){
+            boxImage.src="../data_visualization/boxes/box1.png";
+            boxOpen = false;
+            animating = false;
+        },1000)
+    }
+});
+});
