@@ -357,7 +357,7 @@ bottom: 20,
 
                 boxOpen = false;
                 animating = false;
-            }, 2000);
+            }, 2500);
         }
     });
 
