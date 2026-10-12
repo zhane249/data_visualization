@@ -350,14 +350,14 @@ bottom: 20,
             // closing 
             setTimeout(function() {
                 boxImage.src = "./boxes/box2.png";
-            }, 1000);
+            }, 2000);
 
             setTimeout(function() {
                 boxImage.src = "./boxes/box1.png";
 
                 boxOpen = false;
                 animating = false;
-            }, 1500);
+            }, 2000);
         }
     });
 
