@@ -87,3 +87,9 @@ transition: width 1s;
 .box-container.small{
     width: 200px;
 }
+
+p.interaction-tip{
+font-size: 25px;
+font-weight: 500;
+font-family: 'Times New Roman', Times, serif;
+}
