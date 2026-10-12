@@ -9,3 +9,4 @@ https://www.chartjs.org/docs/latest/samples/plugins/doughnut-empty-state.html
 https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D 
 
 original file: https://archive.ics.uci.edu/dataset/1276/amazon+product+and+google+locations+reviews
+
