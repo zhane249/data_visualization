@@ -22,14 +22,14 @@ window.addEventListener("load", async()=>{
 
         });
         hours.push(hour +":00");
-        averages.push(total/hourlyData.length);
+        averages.push(hourlyData.length >0? total/hourlyData.length : null);
     }
     console.log(hours);
     console.log(averages);
 
     //canvas
     const canvas = document.getElementById("reviewChart");
-
+let hoveredHour = -1;
     //radial bars 
     const clockBars ={
         id: "clockBars",
@@ -46,24 +46,26 @@ window.addEventListener("load", async()=>{
             )/2 -15;
 
             const values = chart.data.datasets[0].data;
-            const maxValue = Math.max(...values, 1);
+            const maxValue = Math.max(...values.filter(v=> Number.isFinite(v)), 1);
             ctx.save();
 
             for(let i=0; i<24; i++){
 
                 //skip 0 values
-                if (values[i] ===0 || values[i] === null){
+                if (!Number.isFinite(values[i]) || values[i] <=0){
                     continue;
                 }
                 //hr around clock
                 let angle =(i/24)* Math.PI*2 - Math.PI/2;
 
                 //longer = more reviews
-                let length = (values[i]/maxValue)*maxRadius;
+           let scale = i === hoveredHour ? 1.5 :1;
+           let length = (values[i]/maxValue) * maxRadius * scale;
+
 
                 let x =centerX + Math.cos(angle)*length;
                 let y = centerY + Math.sin(angle)*length;
-
+let width = i=== hoveredHour ? 35: 8;
                 // ctx.beginPath();
                 // ctx.moveTo(centerX, centerY);
                 // ctx.lineTo(x,y);
@@ -74,7 +76,6 @@ window.addEventListener("load", async()=>{
                 // ctx.stroke();
 
               //cones  
-let width = 8;
 
 //corners
 let leftX = x + Math.cos(angle + Math.PI / 2) * width;
@@ -108,10 +109,61 @@ ctx.closePath();
 ctx.fillStyle = "#39ff14";
 ctx.fill();
 
+//number of reviews once hover
+if (i=== hoveredHour){
+    ctx.save();
+//text along cone
+ctx.translate(
+    centerX + Math.cos(angle)*length *0.7,
+    centerY + Math.sin(angle)*length*0.7
+);
+
+ctx.rotate(angle);
+
+    ctx.fillStyle = "#0f0f91";
+    ctx.font = "20px Times New Roman";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+ctx.fillText(
+    Math.round(values[i]) + "reviews", 0, 0);
+ctx.restore();
+}
+
+//ticks
+            ctx.strokeStyle = "#ffffff";
+            ctx.lineWidth = 2;
+
+            for (let hour = 0; hour < 24; hour++) {
+
+                // Skip main hrs
+                if (hour % 3 === 0) {
+                    continue;
+                }
+
+                let angle = (hour / 24) * Math.PI * 2 - Math.PI / 2;
+
+                let innerTick = maxRadius + 15;
+                let outerTick = maxRadius + 20;
+
+                ctx.beginPath();
+
+                ctx.moveTo(
+                    centerX + Math.cos(angle) * innerTick,
+                    centerY + Math.sin(angle) * innerTick
+                );
+
+                ctx.lineTo(
+                    centerX + Math.cos(angle) * outerTick,
+                    centerY + Math.sin(angle) * outerTick
+                );
+
+                ctx.stroke();
+            }
+
             }
             //hour labels
             ctx.fillStyle = "#ffffff";
-            ctx.font="16px Times New Roman";
+            ctx.font="25px Times New Roman";
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";
 
@@ -124,6 +176,13 @@ ctx.fill();
                 ctx.fillText(hour + ":00", x, y);
             }
             ctx.restore();
+
+        },
+        afterEvent(chart, args){
+            if(args.event.type === "mouseout" && hoveredHour !== -1){
+                hoveredHour = -1;
+                chart.draw();
+            }
         }
     };
 
@@ -140,9 +199,54 @@ let chart = new Chart(canvas, {
         }]
     },
 
-    options:{
-        responsive: true,
-        maintainAspectRation: false,
+  
+       
+options: {
+    responsive: true,
+    maintainAspectRatio: false,
+
+    onHover: (event, elements, chart) => {
+        const centerX = chart.chartArea.left + chart.chartArea.width / 2;
+        const centerY = chart.chartArea.top + chart.chartArea.height / 2;
+
+        const dx = event.x - centerX;
+        const dy = event.y - centerY;
+
+        // hr
+        let angle = Math.atan2(dy, dx) + Math.PI / 2;
+
+        if (angle < 0) {
+            angle += Math.PI * 2;
+        }
+
+        let hour = Math.round(angle / (Math.PI * 2) * 24) % 24;
+
+        const values = chart.data.datasets[0].data;
+        const maxValue = Math.max(...values.filter(v => Number.isFinite(v)), 1);
+
+        const maxRadius = Math.min(
+            chart.chartArea.width,
+            chart.chartArea.height
+        ) / 2 - 15;
+
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        const length = (values[hour] / maxValue) * maxRadius;
+
+        let newHover = -1;
+
+        if (Number.isFinite(values[hour]) &&
+            values[hour] > 0 &&
+            distance > 10 &&
+            distance <= length) {
+            newHover = hour;
+        }
+
+        if (hoveredHour !== newHover) {
+            hoveredHour = newHover;
+            chart.draw();
+        }
+    },
+
         layout:{
             padding:{
                 top: 30,
@@ -158,16 +262,22 @@ let chart = new Chart(canvas, {
             y:{
                 display: false
             },
-            y: {
-                display: false
-            }
+    
         },
         plugins:{
             title:{
                 display: true,
                 text:"Reviews by Time of Day",
-                color: "#ffffff"
-            },
+                color: "#ffffff",
+                font:{
+                    size: 40,
+                family:"Times New Roman"},
+            
+            padding:{
+top: 10,
+bottom: 200,
+
+            }},
             legend:{
                 display:false
 
@@ -178,8 +288,5 @@ let chart = new Chart(canvas, {
         }
     },
     plugins: [clockBars]
-})
-
-
-
+});
 });

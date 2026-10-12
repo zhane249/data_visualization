@@ -5,3 +5,7 @@ first download amazon.csv, too big for csv to json converter, go to chatgpt for 
 
 https://www.highcharts.com/docs/chart-and-series-types/radial-bar-chart
 https://www.chartjs.org/docs/latest/charts/bar.html 
+https://www.chartjs.org/docs/latest/samples/plugins/doughnut-empty-state.html 
+https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D 
+
+original file: https://archive.ics.uci.edu/dataset/1276/amazon+product+and+google+locations+reviews
